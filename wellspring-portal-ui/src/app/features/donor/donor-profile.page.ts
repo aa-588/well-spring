@@ -4,28 +4,56 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-donor-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatInputModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCardModule,
+  ],
   template: `
-    <h2 class="text-xl font-bold mb-4">My Profile</h2>
-
-    <div *ngIf="profile">
-      <div class="mb-3">
-        <input matInput placeholder="Name" [(ngModel)]="profile.name" />
-      </div>
-      <div class="mb-3">
-        <input matInput placeholder="Email" [(ngModel)]="profile.email" />
-      </div>
-      <div class="mb-3">
-        <input matInput placeholder="Phone" [(ngModel)]="profile.phone" />
+    <div class="space-y-6">
+      <!-- Page Header -->
+      <div>
+        <h1 class="text-2xl font-semibold text-gray-800">My Profile</h1>
+        <p class="text-gray-600">
+          Update your personal details to keep your donor information current.
+        </p>
       </div>
 
-      <button mat-flat-button color="primary" (click)="save()">Save</button>
+      <!-- Profile Form -->
+      <mat-card class="p-6 shadow rounded-xl max-w-lg">
+        <div *ngIf="profile" class="space-y-4">
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="profile.name" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="profile.email" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput [(ngModel)]="profile.phone" />
+          </mat-form-field>
+
+          <!-- Save button -->
+          <div class="flex justify-end pt-2">
+            <button mat-flat-button color="primary" (click)="save()">Save</button>
+          </div>
+        </div>
+      </mat-card>
     </div>
-  `
+  `,
 })
 export class DonorProfilePage implements OnInit {
   profile?: Donor;
@@ -45,5 +73,6 @@ export class DonorProfilePage implements OnInit {
   async save() {
     if (!this.profile || !this.currentId) return;
     await this.donorService.update(this.currentId, this.profile);
+    alert('Profile updated successfully');
   }
 }

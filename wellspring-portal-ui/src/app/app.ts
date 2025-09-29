@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="flex h-screen">
       <!-- Sidebar -->
-      <nav class="w-64 bg-gray-100 p-4 space-y-2">
+      <nav class="w-64 bg-gray-100 p-4 space-y-2 overflow-y-auto">
         <h2 class="text-lg font-bold mb-4">Wellspring Portal</h2>
 
         <!-- Admin Links -->
